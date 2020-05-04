@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Queen Movements</title>
+</head>
+<body>
+	<p>This will help to find at which position your queen will be moved.</p>
+	<button id="exe" onclick="execute()">Start</button><br>
+	<p id="pos1"></p>
+	<p id="pos2"></p>
+	<p id="pos3"></p>
+	<p id="pos4"></p>
+	<p id="pos5"></p>
+	<p id="pos6"></p>
+	<p id="pos7"></p>
+	<p id="pos8"></p>
+	<p id="note"><strong>Note:</strong> Click on that "Start" button to execute it.</p><br>
+	<script>
+		positionLog = 
+
+		[["a8","b8","c8","d8","e8","f8","g8","h8"],
+
+  ["a7","b7","c7","d7","e7","f7","g7","h7"],
+
+ ["a6","b6","c6","d6","e6","f6","g6","h6"],
+
+ ["a5","b5","c5","d5","e5","f5","g5","h5"],
+
+ ["a4","b4","c4","d4","e4","f4","g4","h4"],
+
+ ["a3","b3","c3","d3","e3","f3","g3","h3"],
+
+ ["a2","b2","c2","d2","e2","f2","g2","h2"],
+
+ ["a1","b1","c1","d1","e1","f1","g1","h1"]];
+
+ 			var Position = [];
+			var Direction = [];
+			var Hops = [];
+  			var posX = [];
+  			var posY = [];
+
+		function execute()
+		{
+			var n = prompt("How many queens?",0);
+			if(n <= 8)
+			{
+				var i;
+				for(i=1;i<=n;i++)
+				{
+					var pos = prompt("Position of queen","a1");
+  					Position[i-1] = pos;
+					for(var j=0;j<8;j++)
+					{
+						for(var k=0;k<8;k++)
+						{
+							if(positionLog[j][k] === Position[i-1])
+							{
+								posX[i-1] = j;
+								posY[i-1] = k;
+							}
+						}
+					}
+					var dir = prompt("which direction?(N,S,E,W,NE,NW,SE,SW","-");
+					Direction[i-1] = dir;
+					var steps = prompt("How many steps it has to move?",0);
+					Hops[i-1] = steps;
+				}
+				for(var j=0;j<n;j++)
+				{
+					jumpForward(Direction[j],Hops[j],j);
+					if(check(posX[j],posY[j]))
+    				{
+    					switch(j)
+						{
+							case "0": document.getElementById("pos1").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "1": document.getElementById("pos2").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "2": document.getElementById("pos3").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "3": document.getElementById("pos4").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "4": document.getElementById("pos5").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "5": document.getElementById("pos6").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "6": document.getElementById("pos7").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+							case "7": document.getElementById("pos8").innerHTML = "Cannot Move in this direction or cannot jump to "+Hops[j]+" number of steps";break;
+						}
+    				}
+    				else
+    				{
+    					switch(j)
+						{
+							case "0": document.getElementById("pos1").innerHTML = "Position : "+Position[j];break;
+							case "1": document.getElementById("pos2").innerHTML = "Position : "+Position[j];break;
+							case "2": document.getElementById("pos3").innerHTML = "Position : "+Position[j];break;
+							case "3": document.getElementById("pos4").innerHTML = "Position : "+Position[j];break;
+							case "4": document.getElementById("pos5").innerHTML = "Position : "+Position[j];break;
+							case "5": document.getElementById("pos6").innerHTML = "Position : "+Position[j];break;
+							case "6": document.getElementById("pos7").innerHTML = "Position : "+Position[j];break;
+							case "7": document.getElementById("pos8").innerHTML = "Position : "+Position[j];break;
+						}	
+    				}
+				}
+			}
+			else
+				document.getElementById("pos1").innerHTML = "Cannot place more than 8 queens in board";
+		}
+
+		function jumpForward(direc,step,index)
+		{
+    		switch(direc)
+    		{
+        		case "N":
+            		posY[index]=posY[index]-steps;
+            		break;
+        		case "S":
+            		posY[index]=posY[index]+steps;
+            		break;
+        		case "E":
+            		posX[index]=posX[index]+steps;
+            		break;
+        		case "W":
+            		posX[index]=posX[index]-steps;
+            		break;
+        		case "NE":
+            		posY[index]=posY[index]-steps;
+            		posX[index]=posX[index]+steps;
+            		break;
+        		case "NW":
+            		posY[index]=posY[index]-steps;
+            		posX[index]=posX[index]+steps;
+            		break;
+        		case "SE":
+            		posY[index]=posY[index]+steps;
+            		posX[index]=posX[index]+steps;
+            		break;
+        		case "SW":
+            		posY[index]=posY[index]+steps;
+            		posX[index]=posX[index]+steps;
+            		break;
+    		}
+    		if(check(posX[index],posY[index]))
+    		{
+        		return;
+    		}
+    		else
+   			{
+        		Position[index]=positionLog[posX[index]][posY[index]];
+    		}
+    
+		}
+
+		function check(x,y)
+		{
+    		if(x<0 || y<0 || x>7 || y>7)
+        	{
+            	return true;
+        	}
+        	return false;
+		}
+	</script>
+</body>
+</html>
